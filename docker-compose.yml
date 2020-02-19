@@ -8,15 +8,17 @@ services:
     environment: 
       POSTGRES_PASSWORD: password
       POSTGRES_DB: formulaDB20 
+    volumes:
+      - "/var/lib/postgresql/data/"
   api:
     restart: always
     build:
-        context: ./server
+        context: ./src
     ports:
      - "8080:80/tcp"
      - "8080:80/udp"
     volumes:
-     - "./server:/code"
+     - "./src:/code"
     depends_on:
       - db
     environment:

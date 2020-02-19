@@ -9,4 +9,4 @@ WORKDIR /code
 RUN npm install 
 
 # CMD to start server 
-CMD ["node", "index.js"]
+CMD ["node", "app.js"]

@@ -1,4 +1,4 @@
-module.export = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
     const Brake = sequelize.define('Brake', {
         time: DataTypes.DATE,
         value: DataTypes.DOUBLE,
