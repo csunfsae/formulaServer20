@@ -1,10 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-    const Speed = sequelize.define('Speed', {
+    const Suspension = sequelize.define('Suspension', {
         time: DataTypes.DATE,
         fl: DataTypes.DOUBLE,
         fr: DataTypes.DOUBLE,
         rl: DataTypes.DOUBLE,
         rr: DataTypes.DOUBLE,
     }, {});
-    return Speed;
+    return Suspension;
 };

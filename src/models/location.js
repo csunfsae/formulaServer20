@@ -1,11 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
-  const Location = sequelize.define('Location', {
-    lat: DataTypes.DOUBLE,
-    long: DataTypes.DOUBLE,
-    sats: DataTypes.DOUBLE,
-    alt: DataTypes.DOUBLE,
-    time: DataTypes.DATE,
-  }, {});
-
-  return Location;
+    const Location = sequelize.define('Location', {
+        time: DataTypes.DATE, 
+        lat: DataTypes.DOUBLE,
+        long: DataTypes.DOUBLE, 
+    }, {});
+    return Location;
 };

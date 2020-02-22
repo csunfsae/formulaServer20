@@ -1,7 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
     const Accelerator = sequelize.define('Accelerator', {
-        time: DataTypes.DATE,
-        value: DataTypes.DOUBLE,
+        time: DataTypes.DOUBLE,
+        x: DataTypes.DOUBLE,
+        y: DataTypes.DOUBLE,
+        z: DataTypes.DOUBLE,
     }, {});
     return Accelerator;
 };

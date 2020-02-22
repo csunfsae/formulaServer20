@@ -1,24 +1,23 @@
 // libraries 
 const express = require('express'); // express 
 const dgram = require('dgram');  // udp 
-const socketio = require('socket.io'); // socket io 
 const PORT = process.env.PORT || 8080; 
-const HOST = "127.0.0.1";  //localhost
+const HOST = process.env.HOST;  
 
-// app 
 const app = express(); 
-// create udp server 
 const udp = dgram.createSocket('udp4');
-// sequelize export 
-// const db = require('./db.js');
+
+const store = require('./store.js');
 
 // models
-const models = require('./models');
-var values = []
+// const models = require('./models');
+
+// array of bytes 
+var bytes = []
 //------------------------------------------------------------------------------------------------------------------//
 app.get('/', (req, res) => {
     res.json({
-        bytes: values
+        bytes: bytes
     });
 });
 
@@ -26,25 +25,29 @@ app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 //------------------------------------------------------------------------------------------------------------------//
 
 // create database tables if not already created 
-models.sequelize.sync().then(() => {
-    console.log("db and tables created");
-})
+// models.sequelize.sync().then(() => {
+//     console.log("db and tables created");
+// })
 
 //------------------------------------------------------------------------------------------------------------------//
 // UDP 
-
-
-
-// The 'message' event is emitted when a new datagram is available on a socket. The event handler function is passed two arguments: msg and rinfo.
+// receive datagram (packet) 
+// bitwise shift by (4 bytes)
+// divide by 100 if needed 
+// store in db 
 udp.on('message', (msg, rinfo) => {
-    console.log(msg.toString("hex")); // read entire 32 bit unsigned integer
-    // read by 4 bytes 
-    for (i = 0; i < msg.length; i+=4) {
-        k = msg.readUInt32BE(i).toString(16);
-        console.log(k);
-        values.push(k)
-    }
     console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+    console.log(msg.toJSON());
+    console.log(`Buffer length: ${msg.length}`)
+
+    i = 0;
+    while(i < 96) {
+        console.log(((msg[i] ) | (msg[i + 1] << 8) | (msg[i + 2] << 16) | (msg[i + 3] << 24)))
+        i+=4;
+    }
+
+    // store.test(msg);
+
 });
 
 udp.on('error', (err) => {
@@ -54,10 +57,7 @@ udp.on('error', (err) => {
 
 udp.on('listening', () => {
     const address = udp.address();
-    console.log(`server listening ${address.address}:${address.port}`);
+    console.log(`UDP server listening on ${address.address}:${address.port}`);
 });
 
-// app.set('port', 8000);
-// if HOST is ommitted, it will be listening on 0.0.0.0
-udp.bind(41234, HOST);
-// server.listen(8000);
+udp.bind(PORT, HOST);

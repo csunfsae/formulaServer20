@@ -1,8 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
-    const Brake = sequelize.define('Brake', {
+    const MotorSpeed = sequelize.define('MotorSpeed', {
         time: DataTypes.DATE,
         value: DataTypes.DOUBLE,
     }, {});
-
-    return Brake; 
-}
+    return MotorSpeed;
+};
