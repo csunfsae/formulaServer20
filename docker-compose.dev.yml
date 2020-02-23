@@ -1,0 +1,60 @@
+version: '3'
+services: 
+  db:
+    image: timescale/timescaledb:latest-pg10
+    ports:
+      - "5432:5432"
+    restart: always
+    environment: 
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: formuladbtest20 
+  api:
+    restart: always
+    build:
+        context: ./src
+    ports:
+     - "8080:8080/tcp"
+     - "8080:8080/udp"
+    volumes:
+     - "./src:/code"
+    depends_on:
+      - db
+    environment:
+      VIRTUAL_HOST: api.localhost
+  grafana:
+    user: root
+    volumes:
+      - ./grafana-storage:/var/lib/grafana
+      - certs:/etc/letsencrypt/certs:ro
+    image: grafana/grafana
+    ports:
+        - "3000:3000"
+    environment:
+      GF_INSTALL_PLUGINS: "grafana-clock-panel,yesoreyeram-boomtable-panel,briangann-gauge-panel,bessler-pictureit-panel,natel-plotly-panel,jdbranham-diagram-panel,vonage-status-panel"
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+    
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+
+networks:
+  default:
+    external:
+      name: nginx-proxy  

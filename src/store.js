@@ -1,21 +1,134 @@
 const models = require('./models'); 
 
-// function createAccelerator(data) { 
-//     return models.Accelerometer.create({
-//         time: body[1],
-//         x: body[10],
-//         y: body[11],
-//         z: body[12],
-//     });
+function test(dict) {
+    console.log(dict.unixEpoch + " " + dict.time + " " + dict.steeringAngle + " " + dict.batteryTemperature + " " + dict.batteryVoltage + " " + dict.motorSpeed
+    + " " + dict.gear + " " + dict.padding + " " + dict.lat + " " + dict.long + " " + dict.xAccelerator + " " + dict.yAccelerator + " " + dict.zAccelerator
+    + " " + dict.zGyro + " " + dict.yGyro + " " + dict.zGyro + " " + dict.flSuspension + " " +dict.frSuspension + " " +dict.rlSuspension + " " + dict.rrSuspension
+    + " " + dict.flSpeed + " " + dict.frSpeed + " " + dict.rlSpeed + " " + dict.rrSpeed)
+}
+
+function store(data) {
+    createAccelerator(data);
+    createGyroscope(data);
+    createLocation(data);
+    createMotorspeed(data);
+    createPadding(data);
+    createSpeed(data);
+    createSteering(data);
+    createSuspension(data);
+    createTemperature(data);
+    createVoltage(data);
+    // createGear(data);
+}
+
+// create. 
+function createAccelerator(data) {
+    return models.Accelerator.create({
+        time: data.time,
+        x: data.xAccelerator,
+        y: data.yAccelerator, 
+        z: data.zAccelerator,
+    });
+};
+
+function createGyroscope(data) {
+    return models.Gyroscope.create({
+        time: data.time, 
+        x: data.xGyro,
+        y: data.yGyro,
+        z: data.zGyro, 
+    });
+};
+
+function createLocation(data) {
+    return models.Location.create({
+        time: data.time, 
+        lat: data.lat,
+        long: data.long,
+    });
+};
+
+function createMotorspeed(data) {
+    return models.MotorSpeed.create({
+        time: data.time, 
+        value: data.motorSpeed,
+    });
+}; 
+
+function createPadding(data) {
+    return models.Padding.create({
+        time: data.time, 
+        value: data.padding, 
+    });
+};
+
+function createSpeed(data) {
+    return models.Speed.create({
+        time: data.time, 
+        fl: data.flSpeed, 
+        fr: data.frSpeed,
+        rl: data.rlSpeed,
+        rr: data.rrSpeed, 
+    });
+}; 
+
+function createSteering(data) {
+    return models.Steering.create({
+        time: data.time, 
+        value: data.steeringAngle, 
+    });
+};
+
+function createSuspension(data) {
+    return models.Suspension.create({ 
+        time: data.time, 
+        fl: data.flSuspension,
+        fr: data.frSuspension,
+        rl: data.rlSuspension, 
+        rr: data.rrSuspension, 
+    });
+};
+
+function createTemperature(data) {
+    return models.Temperature.create({
+        time: data.time,
+        value: data.batteryTemperature,
+    });
+};
+
+function createVoltage(data) {
+    return models.Voltage.create({
+        time: data.time, 
+        value: data.batteryVoltage,
+    });
+}; 
+
+// function createGear(data) {
+//     return models.Gear.create({
+//         time: data.time,
+//         value: data.gear, 
+//     })
 // }
 
-function test(msg) {
-    i = 0;
-    while(i < 96) {
-        console.log(((msg[i] ) | (msg[i + 1] << 8) | (msg[i + 2] << 16) | (msg[i + 3] << 24)))
-        i+=4;
-    }
-}
+module.exports = {
+    createAccelerator,
+    createGyroscope,
+    createLocation,
+    createPadding,
+    createMotorspeed,
+    createSpeed,
+    createSteering,
+    createSuspension,
+    createTemperature,
+    createVoltage,
+    store,
+    test,
+};
+
+
+
+
+
 // console.log(`1     :  ${((msg[0] ) | (msg[1] << 8) | (msg[2] << 16) | (msg[3] << 24))}`)
 // console.log(`2     :  ${((msg[4] ) | (msg[5] << 8) | (msg[6] << 16) | (msg[7] << 24))}`)
 // console.log(`123   :  ${((msg[8] ) | (msg[9] << 8) | (msg[10] << 16) | (msg[11] << 24))}`)
@@ -41,8 +154,3 @@ function test(msg) {
 // console.log(`43424 :  ${((msg[88] ) | (msg[89] << 8) | (msg[90] << 16) | (msg[91] << 24))}`) // 160
 // console.log(`324   :  ${((msg[92] ) | (msg[93] << 8) | (msg[94] << 16) | (msg[95] << 24))}`) // 68
 
-
-
-module.exports = {
-    test,
-};

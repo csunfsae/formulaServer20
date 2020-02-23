@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
-    const Steering = sequelize.define('Steering', {
+    const Voltage = sequelize.define('Voltage', {
         time: DataTypes.DATE,
         value: DataTypes.DOUBLE,
     }, {});
-    return Steering;
+    return Voltage;
 };
