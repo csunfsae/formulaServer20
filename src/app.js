@@ -24,7 +24,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
-//------------------------------------------------------------------------------------------------------------------//
 
 // create database tables if not already created 
 models.sequelize.sync().then(() => {
@@ -44,6 +43,7 @@ udp.on('message', (msg, rinfo) => {
     var mytime = ("" + (msg[0] ) | (msg[1] << 8) | (msg[2] << 16) | (msg[3] << 24) + (msg[4] ) | (msg[5] << 8) | (msg[6] << 16) | (msg[7] << 24));
     var date = new Date(mytime * 1000);
 
+    // padding is extra index 
     var data = { 
         convertedTime: date,
         unixEpoch: ((msg[0] ) | (msg[1] << 8) | (msg[2] << 16) | (msg[3] << 24)),
@@ -53,12 +53,12 @@ udp.on('message', (msg, rinfo) => {
         batteryVoltage: (((msg[16] ) | (msg[17] << 8) | (msg[18] << 16) | (msg[19] << 24)) / 1000),
         motorSpeed: (((msg[20] ) | (msg[21] << 8) | (msg[22] << 16) | (msg[23] << 24)) / 1000),
         gear: ((msg[24] ) | (msg[25] << 8) | (msg[26] << 16) | (msg[27] << 24)),
-        padding: ((msg[28] ) | (msg[29] << 8) | (msg[30] << 16) | (msg[31] << 24)),
-        lat: (((msg[32] ) | (msg[33] << 8) | (msg[34] << 16) | (msg[35] << 24)) / 10000), 
-        long: (((msg[36] ) | (msg[37] << 8) | (msg[38] << 16) | (msg[39] << 24)) / 10000),
-        xAccelerator: (((msg[40] ) | (msg[41] << 8) | (msg[42] << 16) | (msg[43] << 24)) / 1000),
-        yAccelerator: (((msg[44] ) | (msg[45] << 8) | (msg[46] << 16) | (msg[47] << 24)) / 1000), 
-        zAccelerator: (((msg[48] ) | (msg[49] << 8) | (msg[50] << 16) | (msg[51] << 24)) / 1000),
+        waterTemperature: ((msg[28] ) | (msg[29] << 8) | (msg[30] << 16) | (msg[31] << 24)),
+        latitude: (((msg[32] ) | (msg[33] << 8) | (msg[34] << 16) | (msg[35] << 24)) / 10000), 
+        longitude: (((msg[36] ) | (msg[37] << 8) | (msg[38] << 16) | (msg[39] << 24)) / 10000),
+        xAccelerometer: (((msg[40] ) | (msg[41] << 8) | (msg[42] << 16) | (msg[43] << 24)) / 1000),
+        yAccelerometer: (((msg[44] ) | (msg[45] << 8) | (msg[46] << 16) | (msg[47] << 24)) / 1000), 
+        zAccelerometer: (((msg[48] ) | (msg[49] << 8) | (msg[50] << 16) | (msg[51] << 24)) / 1000),
         xGyro: (((msg[52] ) | (msg[53] << 8) | (msg[54] << 16) | (msg[55] << 24)) / 1000),
         yGyro: (((msg[56] ) | (msg[57] << 8) | (msg[58] << 16) | (msg[59] << 24)) / 1000),
         zGyro: (((msg[60] ) | (msg[61] << 8) | (msg[62] << 16) | (msg[63] << 24)) / 1000),

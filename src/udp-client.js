@@ -1,20 +1,21 @@
 var dgram = require('dgram');
 var client = dgram.createSocket('udp4');
 
+// 1582574515
 var sampleData = {
-    unixEpoch: 1582574515,
+    unixEpoch: 1582672242,
     msTimer: 659,
     steeringAngle: 159 * 1000,
     batteryTemperature: 23 * 1000,
     batteryVoltage: 70 * 1000, 
     motorSpeed: 65* 1000, 
     gear: 3,
-    padding: 50,
+    waterTemperature: 70,
     lat: 34.2418 * 1000,
     long: -118.5289 * 1000,
-    xAccelerator: 20 * 1000,
-    yAccelerator: 30 * 1000, 
-    zAccelerator: 40 * 1000,
+    xAccelerometer: 20 * 1000,
+    yAccelerometer: 30 * 1000, 
+    zAccelerometer: 40 * 1000,
     xGyro: 13 * 1000,
     yGyro: 8 * 1000,
     zGyro: 2 * 1000,
@@ -29,8 +30,8 @@ var sampleData = {
 }; 
 
 var data = [
-    sampleData.unixEpoch, sampleData.msTimer, sampleData.steeringAngle, sampleData.batteryTemperature, sampleData.batteryVoltage, sampleData.motorSpeed, sampleData.gear, sampleData.padding,
-    sampleData.lat, sampleData.long, sampleData.xAccelerator, sampleData.yAccelerator, sampleData.zAccelerator, sampleData.xGyro, sampleData.yGyro, sampleData.zGyro, 
+    sampleData.unixEpoch, sampleData.msTimer, sampleData.steeringAngle, sampleData.batteryTemperature, sampleData.batteryVoltage, sampleData.motorSpeed, sampleData.gear, sampleData.waterTemperature,
+    sampleData.lat, sampleData.long, sampleData.xAccelerometer, sampleData.yAccelerometer, sampleData.zAccelerometer, sampleData.xGyro, sampleData.yGyro, sampleData.zGyro, 
     sampleData.flSuspension, sampleData.frSuspension, sampleData.rlSuspension, sampleData.rrSuspension, sampleData.flSpeed, sampleData.frSpeed, sampleData.rlSpeed, sampleData.rrSpeed
 ]
 

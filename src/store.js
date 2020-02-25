@@ -8,11 +8,12 @@ function test(dict) {
 }
 
 function store(data) {
-    createAccelerator(data);
+    createAccelerometer(data);
     createGyroscope(data);
     createLocation(data);
     createMotorspeed(data);
-    createPadding(data);
+    // createPadding(data);
+    createWaterTemperature(data);
     createSpeed(data);
     createSteering(data);
     createSuspension(data);
@@ -22,12 +23,12 @@ function store(data) {
 }
 
 // create. 
-function createAccelerator(data) {
-    return models.Accelerator.create({
+function createAccelerometer(data) {
+    return models.Accelerometer.create({
         time: data.convertedTime,
-        x: data.xAccelerator,
-        y: data.yAccelerator, 
-        z: data.zAccelerator,
+        x: data.xAccelerometer,
+        y: data.yAccelerometer, 
+        z: data.zAccelerometer,
     });
 };
 
@@ -43,8 +44,8 @@ function createGyroscope(data) {
 function createLocation(data) {
     return models.Location.create({
         time: data.convertedTime, 
-        lat: data.lat,
-        long: data.long,
+        lat: data.latitude,
+        long: data.longitude,
     });
 };
 
@@ -55,12 +56,18 @@ function createMotorspeed(data) {
     });
 }; 
 
-function createPadding(data) {
-    return models.Padding.create({
+function createWaterTemperature(data) {
+    return models.WaterTemperature.create({
         time: data.convertedTime, 
-        value: data.padding, 
+        value: data.waterTemperature, 
     });
 };
+// function createPadding(data) {
+//     return models.Padding.create({
+//         time: data.convertedTime, 
+//         value: data.padding, 
+//     });
+// };
 
 function createSpeed(data) {
     return models.Speed.create({
@@ -111,10 +118,10 @@ function createVoltage(data) {
 // }
 
 module.exports = {
-    createAccelerator,
+    createAccelerometer,
     createGyroscope,
     createLocation,
-    createPadding,
+    // createPadding,
     createMotorspeed,
     createSpeed,
     createSteering,
