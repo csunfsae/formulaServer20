@@ -1,8 +1,9 @@
 const models = require('./models'); 
 
 function test(dict) {
-    console.log(dict.unixEpoch + " " + dict.convertedTime + " " + dict.steeringAngle + " " + dict.batteryTemperature + " " + dict.batteryVoltage + " " + dict.motorSpeed
-    + " " + dict.gear + " " + dict.padding + " " + dict.lat + " " + dict.long + " " + dict.xAccelerator + " " + dict.yAccelerator + " " + dict.zAccelerator
+    console.log(
+    dict.unixEpoch + " " + dict.convertedTime + " " + dict.steeringAngle + " " + dict.batteryTemperature + " " + dict.batteryVoltage + " " + dict.motorSpeed
+    + " " + dict.gear + " " + dict.waterTemperature + " " + dict.latitude + " " + dict.longitude + " " + dict.xAccelerometer + " " + dict.yAccelerometer + " " + dict.zAccelerometer
     + " " + dict.zGyro + " " + dict.yGyro + " " + dict.zGyro + " " + dict.flSuspension + " " +dict.frSuspension + " " +dict.rlSuspension + " " + dict.rrSuspension
     + " " + dict.flSpeed + " " + dict.frSpeed + " " + dict.rlSpeed + " " + dict.rrSpeed)
 }
@@ -12,20 +13,19 @@ function store(data) {
     createGyroscope(data);
     createLocation(data);
     createMotorspeed(data);
-    // createPadding(data);
     createWaterTemperature(data);
     createSpeed(data);
     createSteering(data);
     createSuspension(data);
     createTemperature(data);
     createVoltage(data);
-    // createGear(data);
 }
 
 // create. 
 function createAccelerometer(data) {
     return models.Accelerometer.create({
         time: data.convertedTime,
+        ms: data.msTimer,
         x: data.xAccelerometer,
         y: data.yAccelerometer, 
         z: data.zAccelerometer,
@@ -35,6 +35,7 @@ function createAccelerometer(data) {
 function createGyroscope(data) {
     return models.Gyroscope.create({
         time: data.convertedTime, 
+        ms: data.msTimer,
         x: data.xGyro,
         y: data.yGyro,
         z: data.zGyro, 
@@ -44,6 +45,7 @@ function createGyroscope(data) {
 function createLocation(data) {
     return models.Location.create({
         time: data.convertedTime, 
+        ms: data.msTimer,
         lat: data.latitude,
         long: data.longitude,
     });
@@ -52,6 +54,7 @@ function createLocation(data) {
 function createMotorspeed(data) {
     return models.MotorSpeed.create({
         time: data.convertedTime, 
+        ms: data.msTimer,
         value: data.motorSpeed,
     });
 }; 
@@ -59,6 +62,7 @@ function createMotorspeed(data) {
 function createWaterTemperature(data) {
     return models.WaterTemperature.create({
         time: data.convertedTime, 
+        ms: data.msTimer,
         value: data.waterTemperature, 
     });
 };
@@ -72,6 +76,7 @@ function createWaterTemperature(data) {
 function createSpeed(data) {
     return models.Speed.create({
         time: data.convertedTime, 
+        ms: data.msTimer,
         fl: data.flSpeed, 
         fr: data.frSpeed,
         rl: data.rlSpeed,
@@ -82,6 +87,7 @@ function createSpeed(data) {
 function createSteering(data) {
     return models.Steering.create({
         time: data.convertedTime, 
+        ms: data.msTimer,
         value: data.steeringAngle, 
     });
 };
@@ -89,6 +95,7 @@ function createSteering(data) {
 function createSuspension(data) {
     return models.Suspension.create({ 
         time: data.convertedTime, 
+        ms: data.msTimer,
         fl: data.flSuspension,
         fr: data.frSuspension,
         rl: data.rlSuspension, 
@@ -99,6 +106,7 @@ function createSuspension(data) {
 function createTemperature(data) {
     return models.Temperature.create({
         time: data.convertedTime,
+        ms: data.msTimer,
         value: data.batteryTemperature,
     });
 };
@@ -106,6 +114,7 @@ function createTemperature(data) {
 function createVoltage(data) {
     return models.Voltage.create({
         time: data.convertedTime, 
+        ms: data.msTimer,
         value: data.batteryVoltage,
     });
 }; 
@@ -121,7 +130,7 @@ module.exports = {
     createAccelerometer,
     createGyroscope,
     createLocation,
-    // createPadding,
+    createWaterTemperature,
     createMotorspeed,
     createSpeed,
     createSteering,
