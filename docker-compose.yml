@@ -8,8 +8,6 @@ services:
     environment: 
       POSTGRES_PASSWORD: password
       POSTGRES_DB: formuladb20 
-      volumes:
-        - "./mnt/volume_sfo2_01/postgres:/var/lib/postgresql/data"
   api:
     restart: always
     build:
