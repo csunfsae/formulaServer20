@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: formuladb20 
       volumes:
-        - ./mnt/volume_sfo2_01/postgres:/var/lib/postgresql/data
+        - "./mnt/volume_sfo2_01/postgres:/var/lib/postgresql/data"
   api:
     restart: always
     build:
@@ -22,18 +22,34 @@ services:
     depends_on:
       - db
     environment:
-      VIRTUAL_HOST: api.localhost
+      VIRTUAL_HOST: api.matadormotorsports.racing
   grafana:
+    restart: always
     user: root
     volumes:
       - ./grafana-storage:/var/lib/grafana
       - certs:/etc/letsencrypt/certs:ro
-    image: grafana/grafana
+    image: grafana/grafana:master
     ports:
         - "3000:3000"
     environment:
+      VIRTUAL_HOST: matadormotorsports.racing
       GF_INSTALL_PLUGINS: "grafana-clock-panel,yesoreyeram-boomtable-panel,briangann-gauge-panel,bessler-pictureit-panel,natel-plotly-panel,jdbranham-diagram-panel,vonage-status-panel"
       GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_METRICS_ENABLED: "true"
+      GF_SECURITY_DISABLE_GRAVATAR: "true"
+      GF_SERVER_ROOT_URL: "https://matadormotorsports.racing"
+      GF_INSTALL_PLUGINS: "satellogic-3d-globe-panel,mxswat-separator-panel,pr0ps-trackmap-panel,ryantxu-ajax-panel,grafana-clock-panel,yesoreyeram-boomtable-panel,briangann-gauge-panel,bessler-pictureit-panel,natel-plotly-panel,jdbranham-diagram-panel,vonage-status-panel,grafana-worldmap-panel,snuids-radar-panel,marcuscalidus-svg-panel"
+      # GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_GOOGLE_ENABLED: "true"
+      GF_AUTH_GOOGLE_CLIENT_ID: "${CLIENT_ID}"
+      GF_AUTH_GOOGLE_CLIENT_SECRET: "${CLIENT_SECRET}"
+      GF_AUTH_GOOGLE_SCOPES: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
+      GF_AUTH_GOOGLE_AUTH_URL: "https://accounts.google.com/o/oauth2/auth"
+      GF_AUTH_GOOGLE_TOKEN_URL: "https://accounts.google.com/o/oauth2/token"
+      GF_AUTH_GOOGLE_ALLOWED_DOMAINS: "my.csun.edu csun.edu matadormotorsports.racing"
+      GF_AUTH_GOOGLE_ALLOW_SIGN_UP: "true"
+      GF_SESSION_PROVIDER: "memory"
   nginx-proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy

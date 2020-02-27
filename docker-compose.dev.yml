@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
     environment:
-      VIRTUAL_HOST: api.localhost
+      VIRTUAL_HOST: api.matadormotorsports.racing
   grafana:
     user: root
     volumes:
@@ -29,6 +29,7 @@ services:
     ports:
         - "3000:3000"
     environment:
+      VIRTUAL_HOST: matadormotorsports.racing
       GF_INSTALL_PLUGINS: "grafana-clock-panel,yesoreyeram-boomtable-panel,briangann-gauge-panel,bessler-pictureit-panel,natel-plotly-panel,jdbranham-diagram-panel,vonage-status-panel"
       GF_AUTH_ANONYMOUS_ENABLED: "true"
   nginx-proxy:
