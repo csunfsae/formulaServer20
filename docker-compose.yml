@@ -21,6 +21,8 @@ services:
       - db
     environment:
       VIRTUAL_HOST: api.matadormotorsports.racing
+      LETSENCRYPT_HOST: api.matadormotorsports.racing
+      LETSENCRYPT_EMAIL: csun.fsae.2018@gmail.com
   grafana:
     restart: always
     user: root
@@ -32,7 +34,8 @@ services:
         - "3000:3000"
     environment:
       VIRTUAL_HOST: matadormotorsports.racing
-      GF_INSTALL_PLUGINS: "grafana-clock-panel,yesoreyeram-boomtable-panel,briangann-gauge-panel,bessler-pictureit-panel,natel-plotly-panel,jdbranham-diagram-panel,vonage-status-panel"
+      LETSENCRYPT_HOST: matadormotorsports.racing
+      LETSENCRYPT_EMAIL: csun.fsae.2018@gmail.com
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_METRICS_ENABLED: "true"
       GF_SECURITY_DISABLE_GRAVATAR: "true"
@@ -61,6 +64,20 @@ services:
       - dhparam:/etc/nginx/dhparam
       - certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    restart: always
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: nginx-proxy-le
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam:ro
+      - certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
     restart: always
     
 volumes:

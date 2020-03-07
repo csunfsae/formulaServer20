@@ -53,9 +53,12 @@ var send = new Int32Array(data);
 const buf = Buffer.from(send.buffer);
 
 console.log(`Buffer length: ${buf.length}`)
-client.send(buf, 8080, "127.0.0.1", (err) => { 
+client.send(buf, 8080, "64.227.48.74", (err) => { 
     if(err) {
         console.log(err); 
     }
     client.close(); 
 }); 
+
+
+//127.0.0.1
