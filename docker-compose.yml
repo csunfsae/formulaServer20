@@ -7,7 +7,7 @@ services:
     restart: always
     environment: 
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: formuladbtest20 
+      POSTGRES_DB: formuladb20 
     volumes:
       - pgdata:/var/lib/postgresql/data
   api:
