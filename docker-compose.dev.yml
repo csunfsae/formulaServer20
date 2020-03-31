@@ -7,7 +7,7 @@ services:
     restart: always
     environment: 
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: formuladbtest20 
+      POSTGRES_DB: formuladbtest20
   api:
     restart: always
     build:
