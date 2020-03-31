@@ -16,7 +16,7 @@ console.log(msUnix);
 // 1582672242
 //659 
 var sampleData = {
-    unixEpoch: secondsUnix,
+    unixEpoch: 1585631919,
     msTimer: msUnix,
     steeringAngle: 159 * 1000,
     batteryTemperature: 23 * 1000,
@@ -53,7 +53,7 @@ var send = new Int32Array(data);
 const buf = Buffer.from(send.buffer);
 
 console.log(`Buffer length: ${buf.length}`)
-client.send(buf, 8080, "64.227.48.74", (err) => { 
+client.send(buf, 8080, "localhost", (err) => { 
     if(err) {
         console.log(err); 
     }

@@ -24,7 +24,7 @@ function store(data) {
 // create. 
 function createAccelerometer(data) {
     return models.Accelerometer.create({
-        time: data.convertedTime,
+        time: data.unixEpoch,
         ms: data.msTimer,
         x: data.xAccelerometer,
         y: data.yAccelerometer, 
@@ -34,7 +34,7 @@ function createAccelerometer(data) {
 
 function createGyroscope(data) {
     return models.Gyroscope.create({
-        time: data.convertedTime, 
+        time: data.unixEpoch,
         ms: data.msTimer,
         x: data.xGyro,
         y: data.yGyro,
@@ -44,7 +44,7 @@ function createGyroscope(data) {
 
 function createLocation(data) {
     return models.Location.create({
-        time: data.convertedTime, 
+        time: data.unixEpoch,
         ms: data.msTimer,
         lat: data.latitude,
         long: data.longitude,
@@ -53,7 +53,7 @@ function createLocation(data) {
 
 function createMotorspeed(data) {
     return models.MotorSpeed.create({
-        time: data.convertedTime, 
+        time: data.unixEpoch,
         ms: data.msTimer,
         value: data.motorSpeed,
     });
@@ -61,7 +61,7 @@ function createMotorspeed(data) {
 
 function createWaterTemperature(data) {
     return models.WaterTemperature.create({
-        time: data.convertedTime, 
+        time: data.unixEpoch,
         ms: data.msTimer,
         value: data.waterTemperature, 
     });
@@ -75,7 +75,7 @@ function createWaterTemperature(data) {
 
 function createSpeed(data) {
     return models.Speed.create({
-        time: data.convertedTime, 
+        time: data.unixEpoch,
         ms: data.msTimer,
         fl: data.flSpeed, 
         fr: data.frSpeed,
@@ -86,7 +86,7 @@ function createSpeed(data) {
 
 function createSteering(data) {
     return models.Steering.create({
-        time: data.convertedTime, 
+        time: data.unixEpoch,
         ms: data.msTimer,
         value: data.steeringAngle, 
     });
@@ -94,7 +94,7 @@ function createSteering(data) {
 
 function createSuspension(data) {
     return models.Suspension.create({ 
-        time: data.convertedTime, 
+        time: data.unixEpoch, 
         ms: data.msTimer,
         fl: data.flSuspension,
         fr: data.frSuspension,
@@ -105,7 +105,7 @@ function createSuspension(data) {
 
 function createTemperature(data) {
     return models.Temperature.create({
-        time: data.convertedTime,
+        time: data.unixEpoch,
         ms: data.msTimer,
         value: data.batteryTemperature,
     });
@@ -113,7 +113,7 @@ function createTemperature(data) {
 
 function createVoltage(data) {
     return models.Voltage.create({
-        time: data.convertedTime, 
+        time: data.unixEpoch,
         ms: data.msTimer,
         value: data.batteryVoltage,
     });

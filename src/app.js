@@ -1,5 +1,4 @@
 // libraries 
-// const express = require('express'); // express 
 const dgram = require('dgram');  // udp 
 const PORT = process.env.PORT || 8080; 
 const HOST = process.env.HOST;  
@@ -11,22 +10,16 @@ const udp = dgram.createSocket('udp4');
 const store = require('./store.js');
 const models = require('./models');
 
-
 // create database tables if not already created 
 models.sequelize.sync().then(() => {
     console.log("db and tables created");
 })
 
-//------------------------------------------------------------------------------------------------------------------//
-// UDP 
-// receive datagram (packet) 
-// store in db 
 udp.on('message', (msg, rinfo) => {
     console.log(`Datagram received from ${rinfo.address}:${rinfo.port}`);
-    
+
     var data = { 
-        convertedTime: new Date(msg.readInt32LE(0) * 1000),
-        unixEpoch: msg.readInt32LE(0),
+        unixEpoch: new Date(msg.readInt32LE(0) * 1000),
         msTimer: msg.readInt32LE(4),
         steeringAngle: msg.readInt32LE(8) / 1000,
         batteryTemperature: msg.readInt32LE(12) / 1000,
@@ -52,7 +45,6 @@ udp.on('message', (msg, rinfo) => {
         rrSpeed:  msg.readInt32LE(92) / 1000
     };
 
-    // store.test(data);
 
     store.store(data); 
 });
@@ -68,15 +60,3 @@ udp.on('listening', () => {
 });
 
 udp.bind(PORT, HOST);
-
-
-//------------------------------------------------------------------------------------------------------------------//
-// app.get('/', (req, res) => {
-//     // res.json({
-//     //     bytes: data
-//     // });
-//     res.send("Hello World");
-// });
-// - "8080:8080/tcp"
-
-// app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));

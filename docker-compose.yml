@@ -7,7 +7,9 @@ services:
     restart: always
     environment: 
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: formuladb20 
+      POSTGRES_DB: formuladbtest20 
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   api:
     restart: always
     build:
@@ -86,6 +88,7 @@ volumes:
   html:
   dhparam:
   certs:
+  pgdata:
 
 networks:
   default:
