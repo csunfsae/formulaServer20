@@ -19,6 +19,7 @@ udp.on('message', (msg, rinfo) => {
     console.log(`Datagram received from ${rinfo.address}:${rinfo.port}`);
 
     var data = { 
+        unparsedEpoch: msg.readInt32LE(0),
         unixEpoch: new Date(msg.readInt32LE(0) * 1000),
         msTimer: msg.readInt32LE(4),
         steeringAngle: msg.readInt32LE(8) / 1000,
