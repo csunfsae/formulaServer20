@@ -34,7 +34,7 @@ function createAccelerometer(data) {
 
 function createGyroscope(data) {
     return models.Gyroscope.create({
-        time: data.unparsedEpoch,
+        time: data.unixEpoch,
         ms: data.msTimer,
         x: data.xGyro,
         y: data.yGyro,
