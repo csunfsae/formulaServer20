@@ -45,8 +45,7 @@ udp.on('message', (msg, rinfo) => {
         rlSpeed:  msg.readInt32LE(88) / 1000,
         rrSpeed:  msg.readInt32LE(92) / 1000
     };
-    console.log("unparsed timestamp " + data.unparsedEpoch)
-    console.log("epoch newdate() " + data.unixEpoch)
+    
 
     store.store(data); 
 });
