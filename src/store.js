@@ -24,7 +24,7 @@ function store(data) {
 // create. 
 function createAccelerometer(data) {
     return models.Accelerometer.create({
-        time: data.unixEpoch.toLocaleString(),
+        time: data.unixEpoch,
         ms: data.msTimer,
         x: data.xAccelerometer,
         y: data.yAccelerometer, 
